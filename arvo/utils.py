@@ -326,7 +326,6 @@ def getPoc(localId,issue=None, outPath = None):
     except:
         pocPath = False
     if not pocPath or not pocPath.exists():
-        eventLog(f"Failed to download PoC for {localId}")
         return leaveRet(None,case_dir)
     # If outPath was provided, return just the path (caller manages cleanup)
     # If we created a tmpDir, caller needs to clean up pocPath.parent

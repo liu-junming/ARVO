@@ -101,7 +101,7 @@ def dichotomy_search(commits_list,localId,pname,poc,tag):
     if len(commits_list) < 32:
         print(commits_list)
     INFO(f"[+] {len(commits_list)} commits Left")
-    log = ARVO /"Log"/tag/f"{localId}"/f"{localId}.log"
+    log = ARVO / "Log" / tag / f"{localId}" / f"{localId}.log"
     if not log.exists():
         with open(log,'w') as f:
             f.write("[+] LogFrom: dichotomy_search\n")
@@ -111,7 +111,7 @@ def dichotomy_search(commits_list,localId,pname,poc,tag):
     list_len = len(commits_list)
     if(list_len == 1):
         dichotomy_log(localId,f"[+] Final Result:\n\tCommit: {commits_list[-1]}\n"+"=="*0x20, tag)
-        return commits_list[-1]
+        return commits_list[0]
     if not TURBO:
         mid = int(list_len//2)-1
     else:
@@ -202,7 +202,6 @@ def vulCommit(localId,retryChance=None,hint=None):
     if commits == False:
         return eventLog(f"\t[-] vulCommit {localId}: Failed to list commits")
     commits, TURBO, inclusive = commits
-    
     if len(commits)<=1:
         return eventLog(f"\t[-] vulCommit {localId}: Found {len(commits)} commit, which is abnormal")
     
@@ -211,16 +210,16 @@ def vulCommit(localId,retryChance=None,hint=None):
     if not poc:
         return eventLog(f"\t[-] vulCommit {localId}: Failed to download the PoC")
     # 2 - Prepare for log
-    log = ARVO /"Log"/"bisect"/f"{localId}"
+    log = ARVO /"Log" / "bisect" / f"{localId}"
     if log.exists():
         shutil.rmtree(log)
-    log.mkdir(parents=True,exist_ok=True)
+    log.mkdir(parents=True)
     if hint:
+        # Feature for debugging submodule tracker 
         target_commit = hint
     else:
         target_commit = dichotomy_search(commits,localId,pname,poc,'bisect')
     # Get the gt
-    
     if isinstance(target_commit,list):
         ifsub = False
     else:
@@ -285,9 +284,7 @@ def vulCommit(localId,retryChance=None,hint=None):
             res = super_url+"/"+sub_url
             return res
         for x in submodules:
-            # docker run .... ""
             # TODO bisect, current one searchs one-by-one so it's slow.
-            
             execute(['git','submodule','init'],gt.repo)
             sub_path = str(Path(pname)/x[0])
             sub_url = get_submodule_url(x[0],gt.repo)
@@ -854,14 +851,11 @@ def reproduce(localId, dockerize = True, update = True):
     
     docker_rmi(f"n132/arvo:{localId}-vul")
     docker_rmi(f"n132/arvo:{localId}-fix")
-    
+    buildClean(localId)
 
     if exist_record:
         if not delete_entry(localId):
-            buildClean(localId)
             return False
-    buildClean(localId)
-
     return insert_entry((localId, project, reproduced, reproducer_vul, reproducer_fix, patch_located,
         patch_url, verified, fuzz_target, fuzz_engine,
         sanitizer, crash_type, crash_output, severity, res['report'],fix_commit, language, repo_addr, submodule_bug))
