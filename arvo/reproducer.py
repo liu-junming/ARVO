@@ -304,7 +304,8 @@ def build_fuzzers_impl(localId,project,project_dir,engine,
         return issue_record(project,localId,f"Failed to build DockerImage",retv=False)
     
     # Build Succeed, Try Compiling
-    if logFile and logFile.exists(): os.remove(str(logFile))
+    if logFile and logFile.exists(): 
+        os.remove(str(logFile))
     env = [
         'FUZZING_ENGINE=' + engine,
         'SANITIZER=' + sanitizer,

@@ -850,7 +850,7 @@ def reproduce(localId, dockerize = True, update = True):
         subprocess.run(cmd, stdout=f,stderr=f)
     with open(tmpfile,'rb') as f:
         crash_output = f.read().decode("utf-8", errors="replace").replace("�", "\x00")
-    os.remove(tmpfile)
+    shutil.rmtree(tmpfile.parent)
     
     docker_rmi(f"n132/arvo:{localId}-vul")
     docker_rmi(f"n132/arvo:{localId}-fix")
