@@ -760,7 +760,11 @@ def dockerhubPusher():
         for x in todo:
             if not x.exists():
                 continue
-            localId,tag = x.name.split("-")
+            print(x.name)
+            parts = x.name.split("-")
+            if len(parts)!=2:
+                continue
+            localId,tag = parts
             tag = tag.split(".")[0]
             url = f"https://hub.docker.com/v2/repositories/n132/arvo/tags/{localId}-{tag}/"
             resp = requests.get(url)

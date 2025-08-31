@@ -471,12 +471,7 @@ def verify(localId,save_img=False):
             if  case_dir:
                 clean_dir(case_dir)
             # sudo is necessary since the permission issue
-            out_dir     = OSS_OUT  / str(localId)
-            work_dir    = OSS_WORK  / str(localId)
-            if out_dir.exists():
-                check_call(["sudo","rm","-rf", out_dir])
-            if work_dir.exists():
-                check_call(["sudo","rm","-rf", work_dir])
+            buildClean(localId)
         if RM_IMAGES: 
             remove_oss_fuzz_img(localId)
         return result
