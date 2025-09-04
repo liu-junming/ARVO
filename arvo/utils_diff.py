@@ -123,9 +123,12 @@ def getRevDiff(localId,multi_commits=False):
     return leaveRet(res,gt.repo.parent)
 def getDiff(localId,multi_commits=False):
     localDp = ARVO/"Patches"/f"{localId}.diff"
-
-    commit    = getReport(localId)['fix_commit']
-    commit = commit.split("\n")
+    report_data = getReport(localId)
+    if report_data['submodule_bug']:
+        WARN("[+] TODO: Not support to fetch diff from submodule")
+        return False
+    commit    = report_data['fix_commit']
+    commit    = commit.split("\n")
     if len(commit) == 1:
         commit = commit[0]
     if localDp.exists():
