@@ -132,14 +132,22 @@ def docker_tag(src,dst):
     cmd = ['docker','tag',src,dst]
     INFO(f"[+] Docker Tag {src} -> {dst}")
     return check_call(cmd)
+
+def docker_pull_arvo(localId,tag="vul"):
+    cmd = ['docker','pull', f"n132/arvo:{localId}-{tag}"]
+    INFO(f"[+] Docker Pull: n132/arvo:{localId}-{tag}")
+    return check_call(cmd)
+
 def docker_push(name):
     cmd = ['docker','push',name]
     INFO(f"[+] Docker Push {name}")
     with open('/dev/null','w') as f:
         return check_call(cmd,stdout=f,stderr=f)
+
 def docker_login():
     res = subprocess.run(["docker","login"])
     return res.returncode
+
 def docker_run(args,rm=True,logFile=None):
     if rm:
         cmd = ['docker','run','--rm','--privileged']
@@ -157,19 +165,23 @@ def docker_run(args,rm=True,logFile=None):
             return res
     else:
         return check_call(cmd)
+
 def docker_cp(arg1,arg2):
     cmd = ['docker','cp',arg1,arg2]
     with open('/dev/null','w') as f:
         return check_call(cmd,stdout=f,stderr=f,verbose=False)
+
 def docker_images(name):
     cmd = ["docker","images","-aq",name]
     return execute(cmd).decode()
+
 def docker_rmi(img_name):
     if docker_images(img_name) == '':
         return True
     cmd = ['docker','rmi',img_name]
     with open('/dev/null','w') as f:
         return check_call(cmd,stdout=f,stderr=f,verbose=False)
+
 def docker_ps(container_name):
     cmd = ["docker", "ps", "-aq", "-f", f"name={container_name}"]
     return execute(cmd).decode()
