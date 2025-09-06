@@ -541,6 +541,8 @@ def getReport(localId):
         res['report']  = meta_data[14]
         res['fix_commit']  = meta_data[15]
         res['language']  = meta_data[16]
+        res['submodule_bug'] = True if meta_data[18]==1 else False
+        # res['submodule_bug']  = meta_data[16]
         return res
     except:
         FAIL(f"[FAILED] to find the reported case: {localId}")
