@@ -40,13 +40,13 @@ def metaFilter():
                 break
 
         # Filter out the false positive cases:
-        xxx = []
+        tmp_lst = []
         for y in srcmap:
             file_hash = hashlib.md5()
             with open(y,'rb') as f:
                 file_hash.update(f.read())
-            xxx.append(file_hash.digest())
-        if len(set(xxx)) != len(xxx):
+            tmp_lst.append(file_hash.digest())
+        if len(set(tmp_lst)) != len(tmp_lst):
             false_positives.append(localId)    
     res.extend(broken_srcmaps)
     # print(false_positives)
