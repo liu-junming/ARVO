@@ -209,7 +209,7 @@ def getLanguage(localId):
         return False
     language = str(res[0])
     PLanguage[project_name] = language
-    return language     
+    return language
 def getDate(localId,tag="vul"):
     srcmaps = getSrcmaps(localId)
     if len(srcmaps)!=2:
@@ -267,13 +267,13 @@ def getPname(localId,srcmapCheck=True):
         return False
     else:
         pname = issue['project']
-    if srcmapCheck == False: 
+    if srcmapCheck == False:
         return pname # return when no check
-    if pname in pname_table: 
+    if pname in pname_table:
         return pname_table[pname] # handling special cases
-    with open(srcmap[0]) as f: 
+    with open(srcmap[0]) as f:
         info1 = json.load(f)
-    with open(srcmap[1]) as f: 
+    with open(srcmap[1]) as f:
         info2 = json.load(f)
     except_name = "/src/" + pname
     if (except_name in info1) and (except_name in info2) and (info1[except_name]!=info2[except_name]):
@@ -850,7 +850,7 @@ def localIdMapping(localId):
 
 
 # Init sql db
-db_init() 
+db_init()
 
 def evalSet_NOSRCMAP(val):
     _profile.EVAL_NOSRCMAP = val

@@ -1,5 +1,5 @@
 from .utils import *
-from .utils_git import * 
+from .utils_git import *
 def commitBeforeDate(url,target_ts,protocol,c1,c2):
     date_obj = datetime.strptime(target_ts, "%Y%m%d%H%M")
     timestamp = datetime.timestamp(date_obj)
@@ -9,7 +9,7 @@ def commitBeforeDate(url,target_ts,protocol,c1,c2):
     if not commits:
         shutil.rmtree(gt.repo)
         return False
-    
+
     tsL = []
     for x in commits:
         ts = gt.timestamp(x)
@@ -46,21 +46,21 @@ def customSrcmap_PM(srcmap):
     for key in data:
         nk, data[key]['url'], data[key]['type'] = trans_table(key,data[key]['url'],data[key]['type'])
         if data[key]['url'] == None:
-            del(data[key]) 
+            del(data[key])
         if nk != key:
             data[nk] = data[key]
             del(data[key])
-    
+
     # vk = "/src/"+pname
     # if vk in data:
     #     data[vk]['rev']=commit
     # else:
     #     leaveRet(0xdeadbeef,wd)
     #     PANIC(f"[!] Can't find the key({vk}) in json data")
-    
+
     # readstat-address-201901210219.srcmap.json
     Bsrcmap = wd / srcmap[idx].name
-    
+
     # for key in data:
     #     if (key != vk) and key not in ["/src",'/src/aflplusplus','/src/libfuzzer','/src/afl']:
     #         # Mess the revision so we'll use the a commit that is close to the datetime.
@@ -83,15 +83,15 @@ def customSrcmap(srcmap,pname,commit):
         sm0 = json.load(f)
     with open(srcmap[1]) as f:
         sm1 = json.load(f)
-    
+
     # This should be solved if we can solve the branch issue
-    # Ghost script is an example could get benefit from not_changed_components 
+    # Ghost script is an example could get benefit from not_changed_components
     not_changed_components = []
     for x in sm0:
         if x in sm1:
             if sm0[x] == sm0[x]:
                 not_changed_components.append(x)
-    idx = 1 if len(list(sm1.keys())) >= len(list(sm0.keys())) else 0 
+    idx = 1 if len(list(sm1.keys())) >= len(list(sm0.keys())) else 0
     chosen_srcmap = srcmap[idx].name
     Asrcmap = wd / chosen_srcmap
     if not check_call(['cp',srcmap[idx],Asrcmap]):
@@ -103,7 +103,7 @@ def customSrcmap(srcmap,pname,commit):
     for key in list(data.keys()):
         nk, data[key]['url'], data[key]['type'] = trans_table(key,data[key]['url'],data[key]['type'])
         if data[key]['url'] == None:
-            del(data[key]) 
+            del(data[key])
         if nk != key:
             data[nk] = data.pop(key)
     vk = "/src/"+pname
@@ -112,7 +112,7 @@ def customSrcmap(srcmap,pname,commit):
     else:
         leaveRet(0xdeadbeef,wd)
         PANIC(f"[!] Can't find the key({vk}) in json data")
-    
+
     # readstat-address-201901210219.srcmap.json
     ts = commitDate(data[vk]['url'],commit,data[vk]['type'])
     if not ts:

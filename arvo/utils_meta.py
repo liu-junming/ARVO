@@ -47,7 +47,7 @@ def metaFilter():
                 file_hash.update(f.read())
             tmp_lst.append(file_hash.digest())
         if len(set(tmp_lst)) != len(tmp_lst):
-            false_positives.append(localId)    
+            false_positives.append(localId)
     res.extend(broken_srcmaps)
     # print(false_positives)
     # res.extend(false_positives)
