@@ -37,7 +37,8 @@ TRANS_TABLE = {
     '/src/gdal/curl': 'https://github.com/curl/curl.git',
     '/src/ghostpdl': 'https://cgit.ghostscript.com/ghostpdl.git',
     '/src/cryptofuzz': 'https://github.com/MozillaSecurity/cryptofuzz.git',
-    '/src/python-library-fuzzers': "https://github.com/hugovk/python-library-fuzzers.git"
+    '/src/python-library-fuzzers': "https://github.com/hugovk/python-library-fuzzers.git",
+    "/src/libreoffice": "https://git.libreoffice.org/core",
 }
 # Only include non git project
 TRANS_TYPE = {
@@ -89,6 +90,7 @@ globalStrReplace = {
     "https://gitlab.freedesktop.org/ceyhunalp/poppler.git":'https://gitlab.freedesktop.org/poppler/poppler.git',
     'git.ghostscript.com/ghostpdl.git':'cgit.ghostscript.com/ghostpdl.git',
     "https://github.com/guidovranken/cryptofuzz\n": "https://github.com/MozillaSecurity/cryptofuzz.git\n",
+    "git://anongit.freedesktop.org/libreoffice/core": "https://git.libreoffice.org/core",
     "https://gnunet.org/git": "https://git.gnunet.org",
     'curl http://': "curl -L http://",
     'curl https://': "curl -L https://",
