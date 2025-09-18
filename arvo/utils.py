@@ -99,7 +99,8 @@ def get_projectInfo(localId,pname=None):
     srcmap = getSrcmaps(localId)
     if(len(srcmap)!=2):
         eventLog(f"Can't find enough srcmaps: {localId}",True)
-    if not pname: pname = getPname(localId)
+    if not pname: 
+        pname = getPname(localId)
     with open(srcmap[0]) as f:
         info1 = json.load(f)["/src/"+pname]
     with open(srcmap[1]) as f:
