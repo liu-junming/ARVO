@@ -428,7 +428,7 @@ def check_false_positive(localId):
         str: "False Positive" if it's a false positive, "Not False Positive" otherwise
     """
     LogDir = ARVO / "Log" / "upstream_false_positives"
-    INFO(f"[ARVO] [{datetime.now()}]working on {localId=}")
+    INFO(f"[ARVO] [{datetime.now()}] working on {localId=}")
     res = false_positive(localId)
     vul_result = LogDir/f"{localId}_vul.log"
     fix_result = LogDir/f"{localId}_fix.log"
