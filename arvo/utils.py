@@ -221,7 +221,7 @@ def getDate(localId,tag="vul"):
         srcmap_name = srcmaps[1].name
     commit_date = srcmap_name.split(".")[0].split("-")[-1]
     return str2date(commit_date,STAMP_DELAY)
-def getDone(avoid=False, avoid_list=['binutils', 'libreoffice']):
+def getDone(avoid=False, avoid_list=['libreoffice']):
     conn = sqlite3.connect(DB_PATH)
     try:
         if avoid:
