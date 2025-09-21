@@ -778,6 +778,9 @@ def dockerhubPusher():
             if not docker_push(f"n132/arvo:{localId}-{tag}"):
                 FAIL(f"FAILED to docker push n132/arvo:{localId}-{tag}")
                 continue
+            if not docker_rmi(f"n132/arvo:{localId}-{tag}"):
+                FAIL(f"FAILED to docker rmi n132/arvo:{localId}-{tag}")
+                continue
             os.remove(x)
 
 def dockerImgExist(localId):
