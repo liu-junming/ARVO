@@ -39,6 +39,9 @@ TRANS_TABLE = {
     '/src/cryptofuzz': 'https://github.com/MozillaSecurity/cryptofuzz.git',
     '/src/python-library-fuzzers': "https://github.com/hugovk/python-library-fuzzers.git",
     "/src/libreoffice": "https://git.libreoffice.org/core",
+    "/src/libXfixes": "https://gitlab.freedesktop.org/xorg/lib/libxfixes.git",
+    "/src/drm": "https://gitlab.freedesktop.org/mesa/libdrm.git",
+    "/src/libXext": "https://gitlab.freedesktop.org/xorg/lib/libxext.git",
 }
 # Only include non git project
 TRANS_TYPE = {
@@ -47,6 +50,9 @@ TRANS_TYPE = {
 
 # Order matters please don't change it if you are not sure the influence
 globalStrReplace = {
+    'git://anongit.freedesktop.org/xorg/lib/libXext': 'https://gitlab.freedesktop.org/xorg/lib/libxext.git',
+    'git://anongit.freedesktop.org/mesa/drm': 'https://gitlab.freedesktop.org/mesa/libdrm.git',
+    'git://anongit.freedesktop.org/git/xorg/lib/libXfixes': 'https://gitlab.freedesktop.org/xorg/lib/libxfixes.git',
     'https://bitbucket.org/multicoreware/x265_git/src/stable/': 'https://bitbucket.org/multicoreware/x265_git.git',
     'http://download.icu-project.org/files/icu4c/59.1/icu4c-59_1-src.tgz': 'https://github.com/unicode-org/icu/releases/download/release-59-1/icu4c-59_1-src.tgz',
     'git://git.gnome.org/libxml2': "https://gitlab.gnome.org/GNOME/libxml2.git",
