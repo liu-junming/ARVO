@@ -92,13 +92,17 @@ def fixDockerfile(dockerfile_path,project,commit_date):
         _x265Fix(dft)
     elif project == 'ffmpeg':
         _x265Fix(dft)
-        dft.appendLine('''RUN sed -i '/^[[:space:]]*make[[:space:]]\\+fate-rsync[[:space:]]\\+SAMPLES=\\$TEST_SAMPLES_PATH[[:space:]]*$/c\\echo ARVO' /src/build.sh && \
-    grep -n "echo ARVO" /src/build.sh''')
+        # Single replacement
+        dft.appendLine('''RUN sed -i '/^[[:space:]]*make[[:space:]]\\{1,\\}fate-rsync[[:space:]]\\{1,\\}SAMPLES=\\$TEST_SAMPLES_PATH[[:space:]]*$/c\\echo ARVO' /src/build.sh && \
+            (grep -n "echo ARVO" /src/build.sh || echo "[info] no fate-rsync line; nothing replaced")''')
+
+        # Both replacements
         dft.appendLine('''RUN sed -i \
-  -e '/^[[:space:]]*make[[:space:]]\\+fate-rsync[[:space:]]\\+SAMPLES=\\$TEST_SAMPLES_PATH[[:space:]]*$/c\\echo ARVO' \
-  -e '/fate-suite/c\\echo ARVO' \
-  /src/build.sh && \
-  grep -nE 'echo ARVO|fate-rsync|fate-suite' /src/build.sh''')
+        -e '/^[[:space:]]*make[[:space:]]\\{1,\\}fate-rsync[[:space:]]\\{1,\\}SAMPLES=\\$TEST_SAMPLES_PATH[[:space:]]*$/c\\echo ARVO' \
+        -e '/fate-suite/c\\echo ARVO' \
+        /src/build.sh && \
+        (grep -nE 'echo ARVO|fate-rsync|fate-suite' /src/build.sh || echo "[info] no matching lines; nothing replaced")''')
+
     elif project == 'imagemagick':
         dft.replace(r'RUN svn .*heic_corpus.*',"RUN mkdir /src/heic_corpus && touch /src/heic_corpus/XxX")
     elif project == "jbig2dec":
