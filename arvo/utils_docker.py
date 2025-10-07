@@ -1,7 +1,7 @@
 import re
 import subprocess
 from .utils_exec import *
-from ._profile import CPU_LIMIT, DEBUG
+from ._profile import DEBUG
 from .utils_log import *
 class DfTool():
     def __init__(self,path) -> None:
@@ -153,8 +153,7 @@ def docker_run(args,rm=True,logFile=None):
         cmd = ['docker','run','--rm','--privileged']
     else:
         cmd = ['docker','run','--privileged']
-    if type(CPU_LIMIT)==type(1):
-        cmd += [f'--cpus={CPU_LIMIT}']
+
 
     cmd.extend(args)
     INFO("[+] Docker Run: \n"+" ".join(cmd))

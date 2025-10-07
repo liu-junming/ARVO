@@ -28,7 +28,6 @@ OSS_WORK    = Path(OSS_WORK_DIR)
 OSS_IMG     = Path(OSS_SAVED_IMG)
 OSS_LOCK    = Path(OSS_LOCK_DIR)
 OSS_ERR     = ARVO / 'CrashLog'
-ARVO_ZDC    = Path(ZDC)
 UserName    = UserName
 CLEAN_TMP   = CLEAN_TMP
 TIME_ZONE   = TIME_ZONE
