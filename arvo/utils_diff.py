@@ -98,30 +98,7 @@ def getFixTs(localId):
         res = gt.timestamp(commit[-1])
     return leaveRet(res,gt.repo.parent)
 
-def getRevDiff(localId,multi_commits=False):
-    localDp = ARVO/"PatchesRev"/f"{localId}.diff"
-    commit    = getReport(localId)['fix_commit']
-
-    if localDp.exists():
-        if not isinstance(commit,list) or multi_commits==False:
-            return localDp
-
-    gt = getFixedGt(localId)
-    if not gt:
-        return False
-    
-    if not isinstance(commit,list):
-        res = gt.showCommit(commit,rev=True)
-    else:
-        if multi_commits:
-            res = tmpFile()
-            for one in commit:
-                gt.showCommit(one,res,rev=True)
-        else:
-            res = gt.showCommit(commit[-1],rev=True)
-    return leaveRet(res,gt.repo.parent)
-def getDiff(localId,multi_commits=False):
-    
+def getDiff(localId):
     report_data = getReport(localId)
     if report_data['submodule_bug']:
         WARN("[+] TODO: Not support to fetch diff from submodule")
@@ -129,27 +106,33 @@ def getDiff(localId,multi_commits=False):
     
     commit    = report_data['fix_commit']
     commit    = commit.split("\n")
-    if len(commit) == 1:
-        commit = commit[0]
-    
-    localDp = ARVO/"Patches"/f"{localId}.diff"
-    if localDp.exists():
-        if not isinstance(commit,list) or multi_commits==False:
-            return localDp
 
-    gt = getFixedGt(localId)
-    if not gt:
-        return False
-    if not isinstance(commit,list):
-        res = gt.showCommit(commit)
-    else:
-        if multi_commits:
-            res = tmpFile()
-            for one in commit:
-                gt.showCommit(one,res)
-        else:
-            res = gt.showCommit(commit[-1])
-    return leaveRet(res,gt.repo.parent)
+    cache = PATCHES / f"{localId}"
+
+    if not cache.exists() or len(cache.glob("*.diff"))!=0:
+        """ Slow Path """
+        gt = getFixedGt(localId)
+        if not gt:
+            return False
+        # Prepare cache
+        cache.mkdir(exist_ok=True)
+        for one in commit:
+            tmp = gt.showCommit(one)
+            if not tmp:
+                return leaveRet(tmp,[gt.repo.parent,cache])
+            shutil.move(tmp,cache / f"{one}.diff")
+            shutil.rmtree(tmp.parent)
+        shutil.rmtree(gt.repo.parent)
+    # Prepare return 
+    combined_diff = tmpFile()
+    for diff_file in sorted(cache.glob("*.diff")):
+        with open(diff_file, 'r') as f:
+            combined_diff.write_text(combined_diff.read_text() + f.read())
+    return combined_diff
+
+ 
+        
+
 def getVulComponentProtocol(localId):
     # Filter not supported protocol
     pname   = getPname(localId)
