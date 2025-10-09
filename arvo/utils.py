@@ -99,7 +99,8 @@ def get_projectInfo(localId,pname=None):
     srcmap = getSrcmaps(localId)
     if(len(srcmap)!=2):
         eventLog(f"Can't find enough srcmaps: {localId}",True)
-    if not pname: pname = getPname(localId)
+    if not pname: 
+        pname = getPname(localId)
     with open(srcmap[0]) as f:
         info1 = json.load(f)["/src/"+pname]
     with open(srcmap[1]) as f:
@@ -220,7 +221,7 @@ def getDate(localId,tag="vul"):
         srcmap_name = srcmaps[1].name
     commit_date = srcmap_name.split(".")[0].split("-")[-1]
     return str2date(commit_date,STAMP_DELAY)
-def getDone(avoid=False, avoid_list=['binutils', 'libreoffice']):
+def getDone(avoid=False, avoid_list=['libreoffice']):
     conn = sqlite3.connect(DB_PATH)
     try:
         if avoid:
