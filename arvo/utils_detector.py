@@ -429,7 +429,7 @@ def check_false_positive(localId):
     """
     LogDir = ARVO / "Log" / "upstream_false_positives"
     INFO(f"[ARVO] [{datetime.now()}] working on {localId=}")
-    res = false_positive(localId)
+    res = _false_positive(localId)
     vul_result = LogDir/f"{localId}_vul.log"
     fix_result = LogDir/f"{localId}_fix.log"
 
@@ -465,7 +465,7 @@ def check_false_positive(localId):
         WARN(f"Add new upstream false positive: {localId=}")
         return "False Posiitve"
 
-def false_positive(localId,force_reset = False):
+def _false_positive(localId,force_reset = False):
     """
     Test if a vulnerability report is a false positive by running POC against compiled binaries.
     Downloads OSS-Fuzz binaries, runs proof-of-concept against vulnerable and fixed versions.
