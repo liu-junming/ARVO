@@ -109,7 +109,7 @@ def getDiff(localId):
 
     cache = PATCHES / f"{localId}"
 
-    if not cache.exists() or len(cache.glob("*.diff"))!=0:
+    if not cache.exists() or len(list(cache.iterdir()))!=0:
         """ Slow Path """
         gt = getFixedGt(localId)
         if not gt:
