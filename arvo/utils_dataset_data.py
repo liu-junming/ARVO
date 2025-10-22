@@ -152,7 +152,7 @@ def getCrashOutput(localId):
         subprocess.run(cmd, stdout=f,stderr=f)
     with open(tmpfile,'rb') as f:
         crash_output = f.read().decode("utf-8", errors="replace").replace("�", "\x00")
-    os.remove(tmpfile.parent)
+    shutil.rmtree(tmpfile.parent)
     return crash_output
 
 def dataset_fix_fuzz_target():
@@ -173,7 +173,7 @@ def dataset_fix_fuzz_target():
     
     def _CHECKOUT(localId):
         DB_PATH = ARVO / "arvo.db"
-        try:
+        if(1):
             # Get the correct fuzz target
             fuzz_target = getFuzzTarget_DBFix(localId)
             INFO(f"  Found fuzz_target: {fuzz_target}")
@@ -194,10 +194,7 @@ def dataset_fix_fuzz_target():
                 INFO(f"  Updated database for localId {localId}")
             finally:
                 conn.close()
-                
-        except Exception as e:
-            INFO(f"  Error processing localId {localId}: {e}")
-            return False
+
         return True
     xExplore(todo, "dataset_fix.log", _CHECKOUT)
 def dataset_info_correct():
