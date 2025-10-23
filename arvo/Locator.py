@@ -8,7 +8,7 @@ import json
 import sys
 # fmt: off
 import urllib.parse
-
+import random
 #==================================================================
 #
 #                  Global Variables
@@ -750,13 +750,14 @@ def vZero(localId,retryChance=None):
     target_commit = dichotomy_search(commits+["ZDV"],localId,pname,poc,'vZero')
     return leaveRet(target_commit,poc.parent)
 def dockerhubPusher():
+    
     # The bandwith is usually the limit so we don't do multi-process
     while True:
         todo =list(DOCKER_PUSH_QUEUE.iterdir())
         if len(todo) == 0:
             SUCCESS("All local images are pushed to remote")
             break
-
+        random.shuffle(todo)
         for x in todo:
             if not x.exists():
                 continue

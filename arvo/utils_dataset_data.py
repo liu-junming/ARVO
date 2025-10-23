@@ -6,7 +6,7 @@ def get_failed_to_get_fuzz_targets():
     import sqlite3
     conn = sqlite3.connect(DB_PATH)
     try:
-        cursor = conn.execute('SELECT localId FROM arvo WHERE fuzz_target = ?', ('FAILED_TO_GET',))
+        cursor = conn.execute('SELECT localId FROM arvo WHERE fuzz_target = ? or crash_output like ?', ('FAILED_TO_GET','Unable to find image%'))
         rows = cursor.fetchall()
         
         if not rows:
@@ -15,7 +15,7 @@ def get_failed_to_get_fuzz_targets():
         
         # Extract localId values from the tuples
         localIds = [row[0] for row in rows]
-        print(f'Found {len(localIds)} rows with fuzz_target == "FAILED_TO_GET"')
+        print(f'Found {len(localIds)} rows with fuzz_target == "FAILED_TO_GET" or crash_output like "Unable to find image%"')
         
         return localIds
     finally:
@@ -152,7 +152,7 @@ def getCrashOutput(localId):
         subprocess.run(cmd, stdout=f,stderr=f)
     with open(tmpfile,'rb') as f:
         crash_output = f.read().decode("utf-8", errors="replace").replace("�", "\x00")
-    os.remove(tmpfile.parent)
+    shutil.rmtree(tmpfile.parent)
     return crash_output
 
 def dataset_fix_fuzz_target():
@@ -173,31 +173,29 @@ def dataset_fix_fuzz_target():
     
     def _CHECKOUT(localId):
         DB_PATH = ARVO / "arvo.db"
+        # Get the correct fuzz target
+        fuzz_target = getFuzzTarget_DBFix(localId)
+        INFO(f"  Found fuzz_target: {fuzz_target}")
+            
+        # Get crash output
+        crash_output = getCrashOutput(localId)
+        INFO(f"  Retrieved crash output ({len(crash_output)} chars)")
+            
+        # Update the database
+        conn = sqlite3.connect(DB_PATH)
         try:
-            # Get the correct fuzz target
-            fuzz_target = getFuzzTarget_DBFix(localId)
-            INFO(f"  Found fuzz_target: {fuzz_target}")
-            
-            # Get crash output
-            crash_output = getCrashOutput(localId)
-            INFO(f"  Retrieved crash output ({len(crash_output)} chars)")
-            
-            # Update the database
-            conn = sqlite3.connect(DB_PATH)
-            try:
-                conn.execute("""
-                    UPDATE arvo 
-                    SET fuzz_target = ?, crash_output = ? 
-                    WHERE localId = ?
-                """, (fuzz_target, crash_output, localId))
-                conn.commit()
-                INFO(f"  Updated database for localId {localId}")
-            finally:
-                conn.close()
-                
-        except Exception as e:
-            INFO(f"  Error processing localId {localId}: {e}")
-            return False
+            conn.execute("""
+                UPDATE arvo 
+                SET fuzz_target = ?, crash_output = ? 
+                WHERE localId = ?
+            """, (fuzz_target, crash_output, localId))
+            conn.commit()
+            INFO(f"  Updated database for localId {localId}")
+        finally:
+            conn.close()
+            docker_rmi(f"n132/arvo:{localId}-vul")
+
+
         return True
     xExplore(todo, "dataset_fix.log", _CHECKOUT)
 def dataset_info_correct():
