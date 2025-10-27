@@ -4,7 +4,7 @@ ARVO: an Atlas of Reproducible Vulnerabilities in
 Open source software.
 
 By sourcing vulnerabilities from C/C++ projects that [Google’s OSS-Fuzz][2] discovered and
-Implementing a reliable re-compilation system, we successfully reproduce more than 5,000 memory vulnerabilities across over 250 projects (May 2024), each with a triggering input, the canonical developer-written patch for fixing the vulnerability, and the ability to automatically rebuild the project from source and run it at its vulnerable and patched revisions. Moreover, our dataset can be automatically updated as OSS-Fuzz finds new vulnerabilities, allowing it to grow over time. We provide a thorough characterization of the ARVO dataset and show that it can locate fixes more accurately than Google’s own OSV reproduction effort.
+Implementing a reliable re-compilation system, we successfully reproduce more than 6,000 memory vulnerabilities across over 300 projects (Oct. 2025), each with a triggering input, the canonical developer-written patch for fixing the vulnerability, and the ability to automatically rebuild the project from source and run it at its vulnerable and patched revisions. Moreover, our dataset can be automatically updated as OSS-Fuzz finds new vulnerabilities, allowing it to grow over time. We provide a thorough characterization of the ARVO dataset and show that it can locate fixes more accurately than Google’s own OSV reproduction effort.
 
 # 🚀 Quickstart via Docker (Recommended)
 
@@ -51,3 +51,4 @@ arvo report 25402 # regenerate the report
 [3]: https://github.com/n132/ARVO-Meta/releases
 [4]: https://github.com/n132/ARVO/blob/main/.github/workflows/arvo-ci.yml
 [5]: https://github.com/google/oss-fuzz/issues/12732
+
