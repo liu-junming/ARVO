@@ -56,14 +56,13 @@ class DiffTool():
         return res
 
 
-def getGtforReport(localId):
+def getFixedGt(localId):
     pname   = getPname(localId)
     if not pname:
         return False
     _,info2 = get_projectInfo(localId,pname)
-    protocol = info2['type']
-    gt = GitTool(info2['url'],protocol)
-    return gt
+    return GitTool(info2['url'],info2['type'])
+
 def getFixCommit(localId):
     report = getReport(localId)
     if report == False:
@@ -82,14 +81,14 @@ def getFixUrl(localId):
 def getVulCommit(localId):
     # Get the commit just before the fix commit
     commit    = getReport(localId)['fix_commit']
-    gt = getGtforReport(localId)
+    gt = getFixedGt(localId)
     if not gt:
         return False
     res = gt.prevCommit(commit) if not isinstance(commit,list) else gt.prevCommit(commit[-1])
     return leaveRet(res,gt.repo.parent)
 def getFixTs(localId):
     commit    = getReport(localId)['fix_commit']
-    gt = getGtforReport(localId)
+    gt = getFixedGt(localId)
     if not gt:
         return False
     
@@ -99,55 +98,41 @@ def getFixTs(localId):
         res = gt.timestamp(commit[-1])
     return leaveRet(res,gt.repo.parent)
 
-def getRevDiff(localId,multi_commits=False):
-    localDp = ARVO/"PatchesRev"/f"{localId}.diff"
-    commit    = getReport(localId)['fix_commit']
-
-    if localDp.exists():
-        if not isinstance(commit,list) or multi_commits==False:
-            return localDp
-
-    gt = getGtforReport(localId)
-    if not gt:
-        return False
-    
-    if not isinstance(commit,list):
-        res = gt.showCommit(commit,rev=True)
-    else:
-        if multi_commits:
-            res = tmpFile()
-            for one in commit:
-                gt.showCommit(one,res,rev=True)
-        else:
-            res = gt.showCommit(commit[-1],rev=True)
-    return leaveRet(res,gt.repo.parent)
-def getDiff(localId,multi_commits=False):
-    localDp = ARVO/"Patches"/f"{localId}.diff"
+def getDiff(localId):
     report_data = getReport(localId)
     if report_data['submodule_bug']:
         WARN("[+] TODO: Not support to fetch diff from submodule")
         return False
+    
     commit    = report_data['fix_commit']
     commit    = commit.split("\n")
-    if len(commit) == 1:
-        commit = commit[0]
-    if localDp.exists():
-        if not isinstance(commit,list) or multi_commits==False:
-            return localDp
 
-    gt = getGtforReport(localId)
-    if not gt:
-        return False
-    if not isinstance(commit,list):
-        res = gt.showCommit(commit)
-    else:
-        if multi_commits:
-            res = tmpFile()
-            for one in commit:
-                gt.showCommit(one,res)
-        else:
-            res = gt.showCommit(commit[-1])
-    return leaveRet(res,gt.repo.parent)
+    cache = PATCHES / f"{localId}"
+
+    if not cache.exists() or len(cache.glob("*.diff"))!=0:
+        """ Slow Path """
+        gt = getFixedGt(localId)
+        if not gt:
+            return False
+        # Prepare cache
+        cache.mkdir(exist_ok=True)
+        for one in commit:
+            tmp = gt.showCommit(one)
+            if not tmp:
+                return leaveRet(tmp,[gt.repo.parent,cache])
+            shutil.move(tmp,cache / f"{one}.diff")
+            shutil.rmtree(tmp.parent)
+        shutil.rmtree(gt.repo.parent)
+    # Prepare return 
+    combined_diff = tmpFile()
+    for diff_file in sorted(cache.glob("*.diff")):
+        with open(diff_file, 'r') as f:
+            combined_diff.write_text(combined_diff.read_text() + f.read())
+    return combined_diff
+
+ 
+        
+
 def getVulComponentProtocol(localId):
     # Filter not supported protocol
     pname   = getPname(localId)
@@ -209,15 +194,15 @@ def getAllPatches(targetdir):
     issues = getReports()
     for localId in issues:
         print(f"{issues.index(localId)}/{len(issues)}")
-        tmp = targetdir/f"{localId}.diff"
+        tmp = targetdir/ f"{localId}"
         if tmp.exists():
             continue
         res = getDiff(localId)
         if res == False:
             print(f"[-] Failed to get the patch for {localId}")
             continue
-        shutil.copy(res,tmp)
+        shutil.copy(res,tmp / "{}.diff")
         print(f"[+] {localId}")
 if __name__ == "__main__":
-    targetdir = Path(ARVO/"Patches")
+    targetdir = Path(ARVO/"diff")
     getAllPatches(targetdir)
