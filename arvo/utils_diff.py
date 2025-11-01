@@ -109,7 +109,7 @@ def getDiff(localId):
 
     cache = PATCHES / f"{localId}"
 
-    if not cache.exists() or len(cache.glob("*.diff"))!=0:
+    if not cache.exists() or len(list(cache.iterdir()))!=0:
         """ Slow Path """
         gt = getFixedGt(localId)
         if not gt:
@@ -125,9 +125,10 @@ def getDiff(localId):
         shutil.rmtree(gt.repo.parent)
     # Prepare return 
     combined_diff = tmpFile()
-    for diff_file in sorted(cache.glob("*.diff")):
-        with open(diff_file, 'r') as f:
-            combined_diff.write_text(combined_diff.read_text() + f.read())
+    with open(combined_diff, 'wb') as output:
+        for diff_file in sorted(cache.glob("*.diff")):
+            with open(diff_file, 'rb') as f:
+                output.write(f.read())
     return combined_diff
 
  
