@@ -1,0 +1,7 @@
+{
+  "/src/ogre": {
+    "type": "git",
+    "url": "https://github.com/OGRECave/ogre",
+    "rev": "f20f12a8acc88b67bc7c3746b019ecd88c740eb0"
+  }
+}

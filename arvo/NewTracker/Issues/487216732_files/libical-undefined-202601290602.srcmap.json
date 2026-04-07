@@ -1,0 +1,7 @@
+{
+  "/src/libical": {
+    "type": "git",
+    "url": "https://github.com/libical/libical.git",
+    "rev": "0d7f739ddd93f6e7b7bb9b7e8db9aa4ba639fbda"
+  }
+}

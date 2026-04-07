@@ -1,0 +1,137 @@
+{
+  "/src/OpenJPH": {
+    "type": "git",
+    "url": "https://github.com/aous72/OpenJPH.git",
+    "rev": "4617a8fe34ca8e43a3611d3e0218d7b5dcaebb26"
+  },
+  "/src/x264": {
+    "type": "git",
+    "url": "https://code.videolan.org/videolan/x264.git",
+    "rev": "0480cb05fa188d37ae87e8f4fd8f1aea3711f7ee"
+  },
+  "/src/vvenc": {
+    "type": "git",
+    "url": "https://github.com/fraunhoferhhi/vvenc.git",
+    "rev": "cc10eae1d612f00f4029a4c11878b2baef136a3d"
+  },
+  "/src/vvdec": {
+    "type": "git",
+    "url": "https://github.com/fraunhoferhhi/vvdec.git",
+    "rev": "9617a1e353304b8ba23b4d96748951b61b679f06"
+  },
+  "/src/libwmf": {
+    "type": "git",
+    "url": "https://github.com/caolanm/libwmf.git",
+    "rev": "d2978c4d7456e5b9d7ab69a848a0d8e159b57c4d"
+  },
+  "/src/jbigkit": {
+    "type": "git",
+    "url": "https://www.cl.cam.ac.uk/~mgk25/git/jbigkit",
+    "rev": "7d3c1bea895d910907e2501fe9165e353eceabae"
+  },
+  "/src/libjxl": {
+    "type": "git",
+    "url": "https://github.com/libjxl/libjxl.git",
+    "rev": "4a26aa1bedd0dda49986c1bed9469e3a3c9fc137"
+  },
+  "/src/libzip": {
+    "type": "git",
+    "url": "https://github.com/nih-at/libzip.git",
+    "rev": "e04cda2b035ad49f4a9c3b12fc791411bd7f1e65"
+  },
+  "/src/libxml2": {
+    "type": "git",
+    "url": "https://gitlab.gnome.org/GNOME/libxml2.git",
+    "rev": "8f5f02ba295a20dfc5ddd8de03894918c5870ec8"
+  },
+  "/src/jasper": {
+    "type": "git",
+    "url": "https://github.com/jasper-software/jasper",
+    "rev": "4a78dfa4b94e59767cb91e5d817aa1e2b62e54ae"
+  },
+  "/src/bzip2": {
+    "type": "git",
+    "url": "https://gitlab.com/federicomenaquintero/bzip2.git",
+    "rev": "bf905ea2251191ff9911ae7ec0cfc35d41f9f7f6"
+  },
+  "/src/Little-CMS": {
+    "type": "git",
+    "url": "https://github.com/mm2/Little-CMS",
+    "rev": "4f613d7c08dbb86417e00079f4587e192aa5a04f"
+  },
+  "/src/libpng": {
+    "type": "git",
+    "url": "https://github.com/pnggroup/libpng",
+    "rev": "28cb99fe65f09e79703ac2c3008649e14c7b0844"
+  },
+  "/src/freetype": {
+    "type": "git",
+    "url": "https://github.com/freetype/freetype",
+    "rev": "07d8d50a63a45a7446b2fc44732baecc685f3e4c"
+  },
+  "/src/libjpeg-turbo": {
+    "type": "git",
+    "url": "https://github.com/libjpeg-turbo/libjpeg-turbo",
+    "rev": "572f1ee81c5b08fdb93354f3bf65f6d7617cb5ef"
+  },
+  "/src/zstd": {
+    "type": "git",
+    "url": "https://github.com/facebook/zstd",
+    "rev": "3ae099b48dfcfe02b1b3ba81ab85457f8a922e9f"
+  },
+  "/src/xz": {
+    "type": "git",
+    "url": "https://github.com/tukaani-project/xz",
+    "rev": "bfc5f12a84a2a9df774ed16cd6eb58fd5ab24646"
+  },
+  "/src/zlib": {
+    "type": "git",
+    "url": "https://github.com/madler/zlib",
+    "rev": "09a1572aa624e5ddb6c075dc013880de70b1b9b9"
+  },
+  "/src/libwebp": {
+    "type": "git",
+    "url": "https://github.com/webmproject/libwebp",
+    "rev": "d25c11493a69cb81452db4f0d4d762a9a2da685e"
+  },
+  "/src/libheif": {
+    "type": "git",
+    "url": "https://github.com/strukturag/libheif",
+    "rev": "dde651a50ebe4666071854f7b3d37c16bd66b909"
+  },
+  "/src/openjpeg": {
+    "type": "git",
+    "url": "https://github.com/uclouvain/openjpeg",
+    "rev": "d33cbecc148d3affcdf403211fddc2cc5d442379"
+  },
+  "/src/openh264": {
+    "type": "git",
+    "url": "https://github.com/cisco/openh264",
+    "rev": "cf568c83f71a18778f9a16e344effaf40c11b752"
+  },
+  "/src/aom": {
+    "type": "git",
+    "url": "https://aomedia.googlesource.com/aom",
+    "rev": "de575da20409b4e1fa477c5615837715999c905a"
+  },
+  "/src/x265": {
+    "type": "git",
+    "url": "https://bitbucket.org/multicoreware/x265_git/src/stable/",
+    "rev": "8be7dbf8159ddfceea4115675a6d48e1611b8baa"
+  },
+  "/src/libde265": {
+    "type": "git",
+    "url": "https://github.com/strukturag/libde265",
+    "rev": "36ad04841c209cb8b3577ec2723d431b6bf7efa0"
+  },
+  "/src/libtiff": {
+    "type": "git",
+    "url": "https://gitlab.com/libtiff/libtiff",
+    "rev": "4225987ff183952a29f58322ec4792039c3a8e0c"
+  },
+  "/src/graphicsmagick": {
+    "type": "hg",
+    "url": "https://foss.heptapod.net/graphicsmagick/graphicsmagick",
+    "rev": "7cf4cb7f6d6bdc18366d0d599e5b16a4b8cc357a"
+  }
+}

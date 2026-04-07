@@ -1,0 +1,7 @@
+{
+  "/src/dnsmasq": {
+    "type": "git",
+    "url": "git://thekelleys.org.uk/dnsmasq.git",
+    "rev": "cb321709e9f20cd0949aa375dad2b97050394659"
+  }
+}

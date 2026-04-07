@@ -1,0 +1,7 @@
+{
+  "/src/FreeRDP": {
+    "type": "git",
+    "url": "https://github.com/FreeRDP/FreeRDP.git",
+    "rev": "2fe7c04263721f803b641f117c2c3f97492446c2"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "/src/libultrahdr": {
+    "type": "git",
+    "url": "https://github.com/google/libultrahdr.git",
+    "rev": "8cbc983d2f6c2171af5cbcdb8801102f83fe92ab"
+  },
+  "/src/highway": {
+    "type": "git",
+    "url": "https://github.com/google/highway.git",
+    "rev": "d09285c8606e8e9930e9dc409132e3f291668b24"
+  },
+  "/src/cgif": {
+    "type": "git",
+    "url": "https://github.com/dloebl/cgif.git",
+    "rev": "f729ed68e62b8c7bd855169d218199782b9f8625"
+  },
+  "/src/libimagequant": {
+    "type": "git",
+    "url": "https://github.com/lovell/libimagequant.git",
+    "rev": "4e82d9492db228a7a2057c442f7a6eb40508a0eb"
+  },
+  "/src/libjxl": {
+    "type": "git",
+    "url": "https://github.com/libjxl/libjxl.git",
+    "rev": "9e4c6a0614fef5eb9eb62d5f1d0bff613bc61d4f"
+  },
+  "/src/libheif": {
+    "type": "git",
+    "url": "https://github.com/strukturag/libheif.git",
+    "rev": "e220d5a2c9d0bf09a2252a1f09ffa9bf6a6f963e"
+  },
+  "/src/aom": {
+    "type": "git",
+    "url": "https://aomedia.googlesource.com/aom",
+    "rev": "98ce0d2a610f1465ea14d525bce9fa46d4b05c03"
+  },
+  "/src/libtiff": {
+    "type": "git",
+    "url": "https://gitlab.com/libtiff/libtiff.git",
+    "rev": "f324415f50cb5c90f7712e9dfe69831f5d2ea88d"
+  },
+  "/src/libwebp": {
+    "type": "git",
+    "url": "https://chromium.googlesource.com/webm/libwebp",
+    "rev": "f342dfc1756785df8803d25478bf664c0de629de"
+  },
+  "/src/libpng": {
+    "type": "git",
+    "url": "https://github.com/pnggroup/libpng.git",
+    "rev": "203c843cd732f7062798dfadcaa48dd13d4854af"
+  },
+  "/src/libjpeg-turbo": {
+    "type": "git",
+    "url": "https://github.com/libjpeg-turbo/libjpeg-turbo.git",
+    "rev": "4d293d9400281045e062b6e4eb8e1ccfc89d91f8"
+  },
+  "/src/lcms": {
+    "type": "git",
+    "url": "https://github.com/mm2/Little-CMS.git",
+    "rev": "f739cdafa20314a56c23a306ffd65ef326a692af"
+  },
+  "/src/libexif": {
+    "type": "git",
+    "url": "https://github.com/libexif/libexif.git",
+    "rev": "9a34c3f4f70d8e19d11d93f8551c79c5180f902f"
+  },
+  "/src/zlib": {
+    "type": "git",
+    "url": "https://github.com/madler/zlib.git",
+    "rev": "09a1572aa624e5ddb6c075dc013880de70b1b9b9"
+  },
+  "/src/libvips": {
+    "type": "git",
+    "url": "https://github.com/libvips/libvips.git",
+    "rev": "62e701b27b30e93b67197b4521f904bc02ce9d6c"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "/src/wamr": {
+    "type": "git",
+    "url": "https://github.com/bytecodealliance/wasm-micro-runtime",
+    "rev": "8d069c230c3cc83c622c4d338d84475ff15e3a00"
+  }
+}

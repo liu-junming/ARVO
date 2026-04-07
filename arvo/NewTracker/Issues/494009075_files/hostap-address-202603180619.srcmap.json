@@ -1,0 +1,7 @@
+{
+  "/src/hostap": {
+    "type": "git",
+    "url": "https://w1.fi/hostap.git",
+    "rev": "8f4666f9b174daecad15ba68ffae18d897bc9acf"
+  }
+}

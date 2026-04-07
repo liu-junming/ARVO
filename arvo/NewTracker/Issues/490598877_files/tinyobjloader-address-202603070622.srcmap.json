@@ -1,0 +1,7 @@
+{
+  "/src/tinyobjloader": {
+    "type": "git",
+    "url": "https://github.com/tinyobjloader/tinyobjloader",
+    "rev": "f27721f3c9cd20af4d4eee789431b92d0e0c4477"
+  }
+}

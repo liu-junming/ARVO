@@ -1,0 +1,32 @@
+{
+  "/src/openssl36": {
+    "type": "git",
+    "url": "https://github.com/openssl/openssl.git",
+    "rev": "8ca33c0ed26e54cd9389677a368ac5bdc71abf5f"
+  },
+  "/src/openssl35": {
+    "type": "git",
+    "url": "https://github.com/openssl/openssl.git",
+    "rev": "5b203b397e701f0e7004703ebf010a15feceff4c"
+  },
+  "/src/openssl34": {
+    "type": "git",
+    "url": "https://github.com/openssl/openssl.git",
+    "rev": "cd271d32488fa5405a640d97031a2667d33d1a05"
+  },
+  "/src/openssl33": {
+    "type": "git",
+    "url": "https://github.com/openssl/openssl.git",
+    "rev": "b42e35de8896d31fde610d63dc2c401df8d1290a"
+  },
+  "/src/openssl30": {
+    "type": "git",
+    "url": "https://github.com/openssl/openssl.git",
+    "rev": "b73598621e7fa721c984470a3cd4a3e519d48892"
+  },
+  "/src/openssl": {
+    "type": "git",
+    "url": "https://github.com/openssl/openssl.git",
+    "rev": "5b310281af9a77d180a81c6dc0a093022931b1cb"
+  }
+}

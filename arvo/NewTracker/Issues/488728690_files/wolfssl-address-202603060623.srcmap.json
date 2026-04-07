@@ -1,0 +1,42 @@
+{
+  "/src/fuzz-targets": {
+    "type": "git",
+    "url": "https://github.com/wolfssl/oss-fuzz-targets",
+    "rev": "16a031ec7c8c9a7b6d700e187c8aadcf066225dd"
+  },
+  "/src/wycheproof": {
+    "type": "git",
+    "url": "https://github.com/google/wycheproof.git",
+    "rev": "d1b0cb0337202fa113b735b0e119f451af3c542d"
+  },
+  "/src/cryptofuzz": {
+    "type": "git",
+    "url": "https://github.com/MozillaSecurity/cryptofuzz",
+    "rev": "75e52bea13eefd6fee276468a92ae7e47f1f209a"
+  },
+  "/src/wolf-ssl-ssh-fuzzers": {
+    "type": "git",
+    "url": "https://github.com/JacobBarthelmeh/wolf-ssl-ssh-fuzzers",
+    "rev": "afc45e1b2834618f88ecaaa57ddad5b1016b6e60"
+  },
+  "/src/fuzzing-headers": {
+    "type": "git",
+    "url": "https://github.com/JacobBarthelmeh/fuzzing-headers.git",
+    "rev": "ff706742aeb4dac22a5ce3ac976583d94f19ad42"
+  },
+  "/src/wolfssh": {
+    "type": "git",
+    "url": "https://github.com/wolfSSL/wolfssh.git",
+    "rev": "9efdb7e82017dbb41ff9b819bf6a9f39e409cb7a"
+  },
+  "/src/wolfsm": {
+    "type": "git",
+    "url": "https://github.com/wolfSSL/wolfsm",
+    "rev": "50e88d83b35b639235b6f37c8f10858d4a402fb9"
+  },
+  "/src/wolfssl": {
+    "type": "git",
+    "url": "https://github.com/wolfssl/wolfssl",
+    "rev": "80938758ac4b32d3914cac093ab3e5551906cf62"
+  }
+}

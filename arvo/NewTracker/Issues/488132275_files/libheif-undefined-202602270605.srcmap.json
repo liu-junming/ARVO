@@ -1,0 +1,7 @@
+{
+  "/src/libheif": {
+    "type": "git",
+    "url": "https://github.com/strukturag/libheif.git",
+    "rev": "d50abb3e78d27557ab03a60582ddc748e5d8998c"
+  }
+}

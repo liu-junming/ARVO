@@ -1,0 +1,7 @@
+{
+  "/src/inchi": {
+    "type": "git",
+    "url": "https://github.com/IUPAC-InChI/InChI",
+    "rev": "3a730b50365b2d70a00bda66178cc8bd9043ecd4"
+  }
+}

@@ -143,8 +143,58 @@ def parse_oss_fuzz_report(report_text: bytes,localId: int) -> dict:
     if res['project'] == "NOTFOUND":
         res['project'] = res['job_type'].split("_")[-1]
     return res
+def _meta_getIssue_html(issue_id, session):
+    """Fallback parser for new-format issues whose /events endpoint returns 404.
+
+    The issue HTML page embeds the same ClusterFuzz report text and additionally
+    contains the verified-fixed revision URL as a second distinct 'range=' link.
+    """
+    r = session.get(f'https://issues.oss-fuzz.com/issues/{issue_id}')
+    if r.status_code != 200:
+        WARN(f"[HTML fallback] HTTP {r.status_code} for issue {issue_id}")
+        return False
+    page = r.text
+
+    # Extract the ClusterFuzz report block (from "Fuzz Target:" to "Issue filed")
+    idx_start = page.find('Fuzz Target:')
+    idx_end   = page.find('Issue filed automatically')
+    if idx_start == -1 or idx_end == -1:
+        WARN(f"[HTML fallback] Cannot locate report block for {issue_id}")
+        return False
+    report_text = page[idx_start:idx_end]
+    report_bytes = report_text.encode('utf-8', errors='ignore')
+
+    try:
+        res = parse_oss_fuzz_report(report_bytes, issue_id)
+    except Exception:
+        WARN(f"[HTML fallback] parse_oss_fuzz_report failed for {issue_id}")
+        return False
+    if not res:
+        return False
+
+    # Fix project: the HTML report page shows "Fuzz Target: <fuzzer>" rather than
+    # "Project: <project>", so parse_oss_fuzz_report matches the fuzzer name.
+    # Always re-derive the project from the job_type suffix for new-format issues.
+    job_type = res.get('job_type', '')
+    if job_type:
+        parsed_job = parse_job_type(job_type)
+        if 'project' in parsed_job:
+            res['project'] = parsed_job['project']
+
+    # Extract verified_fixed from the second distinct revision URL in the page.
+    if res.get('verified_fixed') == 'NO_FIX':
+        page_dec = page.replace(r'\u003d', '=').replace(r'\u0026', '&')
+        # Collect revision URLs that contain 'range=' and no HTML-entity ampersand
+        revisions = list(dict.fromkeys(
+            u for u in re.findall(r'https://oss-fuzz\.com/revisions\?[^\s"\\<]+', page_dec)
+            if 'range=' in u and '&amp;' not in u
+        ))
+        if len(revisions) >= 2:
+            res['verified_fixed'] = revisions[1]
+
+    return res
+
 def meta_getIssue(issue_id):
-    url = f'https://issues.oss-fuzz.com/action/issues/{issue_id}/events?currentTrackerId=391'
     session = requests.Session()
     # Step 1: Get the token from the cookie
     session.get("https://issues.oss-fuzz.com/")
@@ -163,11 +213,16 @@ def meta_getIssue(issue_id):
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
         'X-XSRF-Token': xsrf_token
     }
+    # Step 2: Try the events endpoint (works for legacy issues)
+    url = f'https://issues.oss-fuzz.com/action/issues/{issue_id}/events?currentTrackerId=391'
     response = session.get(url, headers=headers)
+    if response.status_code == 404:
+        # New issue format: fall back to HTML page parsing
+        return _meta_getIssue_html(issue_id, session)
     raw_text = response.content
     try:
-        res = parse_oss_fuzz_report(raw_text,issue_id)
-    except:
+        res = parse_oss_fuzz_report(raw_text, issue_id)
+    except Exception:
         WARN(f"FAIL on {issue_id}, skip")
         return False
     return res
@@ -221,7 +276,10 @@ storage_client = None
 def download_build_artifacts(metadata, url, outdir):
     global storage_client
     if storage_client is None:
-        storage_client = storage.Client()
+        # clusterfuzz-builds buckets are publicly readable; use anonymous credentials
+        # to avoid needing a quota project from the caller's GCP account.
+        from google.auth.credentials import AnonymousCredentials
+        storage_client = storage.Client(credentials=AnonymousCredentials(), project='oss-fuzz')
     bucket_map = {
         "libfuzzer_address_i386": "clusterfuzz-builds-i386",
         "libfuzzer_memory_i386": "clusterfuzz-builds-i386",
@@ -325,9 +383,16 @@ def data_download(localIds = None):
         if 'regressed' not in metadata[localId] or 'verified_fixed' not in metadata[localId] or \
             metadata[localId]['verified_fixed'] == 'NO_FIX':
             continue
-        if getLanguage(str(localId)) not in ['c','c++']:
+        # Fast language check from the metadata dict (avoids needing srcmaps on disk).
+        # Falls back to getLanguage() for projects not in the PLanguage cache.
+        _pname = metadata[localId].get('project')
+        if _pname and _pname in PLanguage:
+            _lang = PLanguage[_pname]
+        else:
+            _lang = getLanguage(str(localId))
+        if _lang not in ['c','c++']:
             WARN(f"[!] Not C/C++ Issue: {localId=}")
-            to_remove.append(x)
+            to_remove.append(localId)
             continue
         if not silentRun(download_build_artifacts,metadata[localId], metadata[localId]['regressed'], issue_dir): 
             WARN(f"[!] Failed to download the srcmap: {localId=}")

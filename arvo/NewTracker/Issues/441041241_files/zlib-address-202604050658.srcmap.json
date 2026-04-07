@@ -1,0 +1,7 @@
+{
+  "/src/zlib": {
+    "type": "git",
+    "url": "https://github.com/madler/zlib.git",
+    "rev": "f9dd6009be3ed32415edf1e89d1bc38380ecb95d"
+  }
+}

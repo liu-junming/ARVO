@@ -1,0 +1,12 @@
+{
+  "/src/radare2-fuzz": {
+    "type": "git",
+    "url": "https://github.com/radareorg/radare2-fuzz",
+    "rev": "4b554a7da6749cbae43750aa5ec8fe5e051fabb1"
+  },
+  "/src/radare2": {
+    "type": "git",
+    "url": "https://github.com/radareorg/radare2",
+    "rev": "cbf306886ca3996ad1cde8efd8ee04fd04d2e4ba"
+  }
+}
